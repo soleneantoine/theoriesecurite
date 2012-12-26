@@ -1,0 +1,128 @@
+/* 
+    Document   : style
+    Created on : 2 déc. 2012, 13:47:14
+    Author     : soleneantoine
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'espregular';
+    src: url('font/esp-webfont.eot');
+    src: url('font/esp-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/esp-webfont.woff') format('woff'),
+         url('font/esp-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'champagne__limousinesregular';
+    src: url('font/champagne__limousines-webfont.eot');
+    src: url('font/champagne__limousines-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/champagne__limousines-webfont.woff') format('woff'),
+         url('font/champagne__limousines-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+root { 
+    display: block;
+}
+
+body {
+    background: url('pictures/low_contrast_linen.png');
+    /*background-color: gray; */
+    font-family: 'champagne__limousinesregular';
+    color: #eee;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-family: 'espregular';
+    color: #00cccc;
+    letter-spacing: normal;
+    margin-bottom: 70px;
+    text-shadow: 1px 1px 2px white;
+}
+
+h2{
+    color: #00cccc;
+}
+
+p{
+    text-align: justify;
+    line-height: 20px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    height: 30px;
+    text-align: center;
+}
+#content{
+    margin: 20px 50px;
+}
+
+.description {
+    margin-top: 20px;
+}
+
+.info {
+    color:#00cccc;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.error {
+    background: rgba(255, 0, 0, 0.3);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.classement{
+    margin-left: 700px;
+}
+
+.trophee{
+    position: absolute;
+    float: left;
+    margin-left: 100px;
+    padding-right: 200px;
+}
+
+.felicitations {
+    padding-left: 180px;
+    padding-top: 175px;
+    float: left;
+    font-family: 'espregular';
+    color: #00cccc;
+    font-size: large;
+}
+
+.ligne {
+    border-bottom:2px solid #00cccc;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.menu {
+    text-align: center;
+}
+
+.menu a{
+    border : 1px solid #00cccc;
+    font-family: 'espregular';
+    color: #00cccc;
+    border-radius: 3px 3px 3px 3px;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 5px;
+}
+
