@@ -89,15 +89,14 @@ td {
 }
 
 .trophee{
-    position: absolute;
     float: left;
     margin-left: 100px;
-    padding-right: 200px;
+    margin-top: 50px;   
 }
 
 .felicitations {
-    padding-left: 180px;
-    padding-top: 175px;
+    padding-left: 80px;
+    padding-top: 75px;
     float: left;
     font-family: 'espregular';
     color: #00cccc;

@@ -4,6 +4,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Theorie de la Sécurité</title>
         <link rel="stylesheet" href="style.css"/>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/localscroll/jquery.localscroll.js"></script>
+        <script type="text/javascript" src="js/localscroll/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="js/lancement.js"></script>
+        <script type="text/javascript"></script>
     </head>
     <body class="home">
         <div id="content">
@@ -26,12 +31,12 @@
             <h2 >Classement des groupes</h2>
             
             <?php
-//            ini_set('display_errors', 1);
+            ini_set('display_errors', 1);
             
                 include('class/Groupes.php');
                 include('connection.php');
                 
-                echo "<div><img class='trophee' src='pictures/gagnant2.png'/><p class='felicitations'>Félicitations au groupe ".Groupe::getWinner()->getNumero()."</p></div>";
+                echo "<div style='float:left'><img class='trophee' src='pictures/trophee.png'/><div style='clear:both'></div><p class='felicitations'>Félicitations au groupe ".Groupe::getWinner()->getNumero()."</p></div>";
                 echo "
                    <table class='classement'>
                     <tr class='info'><td>Position</td><td>Groupe</td><td>Score</td></tr>";
