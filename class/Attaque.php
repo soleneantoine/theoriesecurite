@@ -19,23 +19,9 @@ class Attaque {
         $this->groupeAttaquant = $gAttaquant;
         $this->groupeAttaque = $gAttaque;
         $this->version = $v;
-        $this->version->setEstAttaque("True");
         $this->pdf = $p;
         
-        $this->groupeAttaquant->score = $this->groupeAttaquant->score + 20;
-        $this->groupeAttaque->setScore($this->groupeAttaque->getScore()-20);
-        
-        $sql = "INSERT INTO `theorieSecurite`.`Attaque` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".$this->groupeAttaquant->getNumero()."', '".$this->groupeAttaque->getNumero()."', '".$this->version->getNumero()."', NULL, '".$this->pdf."');";
-        MyPDO::get()->exec($sql);
-        
-        $sql = "UPDATE  `theorieSecurite`.`Version` SET  `estAttaque` =  '1' WHERE  `Version`.`groupe` = '".$this->groupeAttaque->getNumero() ."' AND `Version`.`numero` =". $this->version->getNumero();
-        MyPDO::get()->exec($sql);
-        
-        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$this->groupeAttaquant->score."' WHERE  `Groupe`.`numero` =".$this->groupeAttaquant->getNumero();
-        MyPDO::get()->exec($sql);
-        
-        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$this->groupeAttaque->score."' WHERE  `Groupe`.`numero` =".$this->groupeAttaque->getNumero();
-        MyPDO::get()->exec($sql);
+
         
     }
     
@@ -70,6 +56,29 @@ class Attaque {
     public function setPdf($pdf) {
         $this->pdf = $pdf;
     }
+    
+    public static function getAttaques(){
+        $attaques = array();
+        $resultats = MyPDO::get()->query("SELECT * FROM AttaqueEnCours");
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        while( $ligne = $resultats->fetch() )
+        {
+            $attaque = new Attaque($ligne->groupeAttaquant,$ligne->groupeAttaque,$ligne->version,$ligne->id);
+            array_push($attaques, $attaque);
+        }
+        return $attaques;
+    }
+    
+    public static function getAttaque($gAttaquant,$gAttaque,$v){
+        foreach (Attaque::getAttaques() as $a){
+            if (( $a->getGroupeAttaquant() == $gAttaquant) && ( $a->getGroupeAttaque() == $gAttaque)&& ( $a->getVersion() == $v)) {
+                return $a;
+            }
+        }
+        return null;
+    }
+    
+
 
 }
 

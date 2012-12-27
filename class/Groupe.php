@@ -63,6 +63,10 @@ class Groupe {
             
             $sql = "INSERT INTO `theorieSecurite`.`Version` (`id`, `numero`, `estAttaque`, `groupe`, `pdf`) VALUES (NULL, '".(sizeof($this->versions)+1)."', '0', '".$this->numero."', '');";
             MyPDO::get()->exec($sql);
+            
+            $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'version',  '".$_SESSION["groupe"]."',  '',  '".(sizeof($this->versions)+1)."');";
+            MyPDO::get()->exec($sql);
+            
             array_push($this->versions, $v);
         }
         else echo "Ajout non autorisé<br>";
@@ -79,7 +83,6 @@ class Groupe {
         $attaque = "True";
         if (sizeof($this->versions) > 0) {
             $attaque = $this->versions[sizeof($this->versions)-1]->getEstAttaque();
-            echo $attaque.'<br>';
         }
         return $attaque;
     }
@@ -100,7 +103,11 @@ class Groupe {
     public function attaque($groupe,$pdf) {
         if ((sizeof($groupe->getVersions()) > 0) && ($groupe->getNumero() != $this->numero)) {
             $v = $groupe->getVersions();
-            new Attaque($this, $groupe,$v[sizeof($groupe->getVersions())-1],$pdf);        
+            new Attaque($this, $groupe,$v[sizeof($groupe->getVersions())-1],$pdf);
+            $sql = "INSERT INTO `theorieSecurite`.`AttaqueEnCours` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".$this->numero."', '".$groupe->getNumero()."', '".$v[sizeof($groupe->getVersions())-1]->getNumero()."', NULL, '".$pdf."');";
+            MyPDO::get()->exec($sql);
+            
+            
         }
         else throw new Exception("Attaque non autorisée<br>");        
     }
@@ -111,7 +118,7 @@ class Groupe {
         $sql = "SELECT * FROM Attaque WHERE groupeAttaquant = $this->numero";
         foreach  (MyPDO::get()->query($sql) as $row) {
             if($row["groupeAttaque"] == $groupe->getNumero()) {
-                $r .= "attaque(v".$row["version"].") <a href='".$row["pdf"]."'><img src='pictures/imageLoupe.png' style='width: 25px; heigth: 25px;'/></a><br>";
+                $r .= "attaque(v".$row["version"].") <a href='".$row["pdf"]."'><img src='pictures/imageLoupe.png' style='width: 15px; heigth: 25px;'/></a><br>";
             }
         }
         return $r;
@@ -147,6 +154,38 @@ class Groupe {
             }
         }
         return null;
+    }
+    
+    public function confirmerAttaque($attaque) {   
+        
+        
+        $numVersion = $attaque->getVersion();
+        $version = Version::getVersion($this->numero, $numVersion);
+        $version->setEstAttaque("True");
+        
+        $sql = "INSERT INTO `theorieSecurite`.`Attaque` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".$attaque->getGroupeAttaquant()."', '".$attaque->getGroupeAttaque()."', '".$attaque->getVersion()."', NULL, '".$attaque->getPdf()."');";
+        MyPDO::get()->exec($sql);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Version` SET  `estAttaque` =  '1' WHERE  `Version`.`groupe` = '".$attaque->getGroupeAttaque() ."' AND `Version`.`numero` =". $attaque->getVersion();
+        MyPDO::get()->exec($sql);
+        
+        $gAttaquant = Groupe::getGroupe($attaque->getGroupeAttaquant());
+        $gAttaquant->setScore($gAttaquant->getScore() + 20);
+        
+        $gAttaque = Groupe::getGroupe($attaque->getGroupeAttaque());
+        $gAttaque->setScore($gAttaque->getScore() - 20);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$gAttaquant->getScore()."' WHERE  `Groupe`.`numero` =".$gAttaquant->getNumero();
+        MyPDO::get()->exec($sql);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$gAttaque->getScore()."' WHERE  `Groupe`.`numero` =".$gAttaque->getNumero();
+        MyPDO::get()->exec($sql);
+        
+        $sql = "DELETE FROM `theorieSecurite`.`AttaqueEnCours` WHERE `AttaqueEnCours`.`groupeAttaquant` = ".$attaque->getGroupeAttaquant()." AND `AttaqueEnCours`.`groupeAttaque` = ".$attaque->getGroupeAttaque()." AND `AttaqueEnCours`.`version` = ".$attaque->getVersion();
+        MyPDO::get()->exec($sql);
+               
+        $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'attaque',  '".$_SESSION["groupe"]."',  '".$attaque->getGroupeAttaquant()."',  '".$attaque->getVersion()."');";
+        MyPDO::get()->exec($sql);
     }
    
 }

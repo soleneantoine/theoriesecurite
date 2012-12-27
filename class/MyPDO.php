@@ -10,6 +10,7 @@
  *
  * @author soleneantoine
  */
+
 class MyPDO extends PDO {
     const PARAM_hote='localhost'; // le chemin vers le serveur
     const PARAM_nom_bd='theorieSecurite'; // le nom de votre base de données
