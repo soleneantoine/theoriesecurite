@@ -15,19 +15,13 @@
     elseif ($_POST['groupeAttaque'] == $_POST['groupeAttaquant']) {
          header('Location: index.php?error=Vous ne pouvez pas vous attaquer vous même#Attaquer');  
     }
-    
+   
+    $groupeAttaquant = Groupe::getGroupe($_POST['groupeAttaquant']);   
+    $groupeAttaque = Groupe::getGroupe($_POST['groupeAttaque']);
 
-    $groupes = Groupes::getInstance();
-    
-    
-    $groupeAttaquant = $groupes->getGroupe($_POST['groupeAttaquant']);
-    $groupeAttaque = $groupes->getGroupe($_POST['groupeAttaque']);
-    
     $groupeAttaquant->attaque($groupeAttaque,"");
-    $groupeAttaquant->attaque($groupeAttaque,"");
-    //$attaque = new Attaque($groupeAttaquant, $groupeAttaque, $groupeAttaque->getDerniereVersion(), "");
     
-    echo $groupeAttaquant->displayAttaques($groupeAttaque);
+    echo "<a href='index.php'>Retour</a>";
     
 //    
 //    echo "groupe attaquant : ".$groupeAttaquant->getNumero()."<br>";

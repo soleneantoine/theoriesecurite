@@ -28,48 +28,48 @@ include ("Groupe.php");
             return self::$_instance;
         }
         
-        public function init(){
-            for ($i = 0; $i < 13; $i++) {
-                    array_push($this->groupes, new Groupe($i+1));
-            }
-            
-            $g1 = $this->groupes[0];
-            $g2 = $this->groupes[1];
-            $g3 = $this->groupes[2];
-            $g4 = $this->groupes[3];
-            $g5 = $this->groupes[4];
-            $g6 = $this->groupes[5];
-            $g7 = $this->groupes[6];
-            $g8 = $this->groupes[7];
-            $g9 = $this->groupes[8];
-            $g10 = $this->groupes[9];
-            $g11 = $this->groupes[10];
-            $g12 = $this->groupes[11];
-            $g13 = $this->groupes[12];
-
-            $g1->initScore(126);
-            $g2->initScore(205);
-            $g3->initScore(325);
-            $g4->initScore(605);
-            $g5->initScore(525);
-            $g6->initScore(105);
-            $g7->initScore(895);
-            $g8->initScore(405);
-            $g9->initScore(215);
-            $g10->initScore(105);
-            $g11->initScore(895);
-            $g12->initScore(405);
-            $g13->initScore(215);
-
-            $g1->ajoutVersion("");
-            $g2->ajoutVersion("");
-
-            $g1->attaque($g2,"pdfs/pdf1.pdf");
-            $g2->attaque($g1,"pdfs/pdf2.pdf");
-
-            $g2->ajoutVersion("");
-            $g1->attaque($g2,"pdfs/pdf3.pdf");
-        }
+//        public function init(){
+//            for ($i = 0; $i < 13; $i++) {
+//                    array_push($this->groupes, new Groupe($i+1));
+//            }
+//            
+//            $g1 = $this->groupes[0];
+//            $g2 = $this->groupes[1];
+//            $g3 = $this->groupes[2];
+//            $g4 = $this->groupes[3];
+//            $g5 = $this->groupes[4];
+//            $g6 = $this->groupes[5];
+//            $g7 = $this->groupes[6];
+//            $g8 = $this->groupes[7];
+//            $g9 = $this->groupes[8];
+//            $g10 = $this->groupes[9];
+//            $g11 = $this->groupes[10];
+//            $g12 = $this->groupes[11];
+//            $g13 = $this->groupes[12];
+//
+//            $g1->initScore(126);
+//            $g2->initScore(205);
+//            $g3->initScore(325);
+//            $g4->initScore(605);
+//            $g5->initScore(525);
+//            $g6->initScore(105);
+//            $g7->initScore(895);
+//            $g8->initScore(405);
+//            $g9->initScore(215);
+//            $g10->initScore(105);
+//            $g11->initScore(895);
+//            $g12->initScore(405);
+//            $g13->initScore(215);
+//
+//            $g1->ajoutVersion("");
+//            $g2->ajoutVersion("");
+//
+//            $g1->attaque($g2,"pdfs/pdf1.pdf");
+//            $g2->attaque($g1,"pdfs/pdf2.pdf");
+//
+//            $g2->ajoutVersion("");
+//            $g1->attaque($g2,"pdfs/pdf3.pdf");
+//        }
         
         public function max($groupes){
             $g = $groupes[0];

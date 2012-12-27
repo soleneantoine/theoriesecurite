@@ -24,7 +24,19 @@ class Attaque {
         
         $this->groupeAttaquant->score = $this->groupeAttaquant->score + 20;
         $this->groupeAttaque->setScore($this->groupeAttaque->getScore()-20);
-
+        
+        $sql = "INSERT INTO `theorieSecurite`.`Attaque` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".$this->groupeAttaquant->getNumero()."', '".$this->groupeAttaque->getNumero()."', '".$this->version->getNumero()."', NULL, '".$this->pdf."');";
+        MyPDO::get()->exec($sql);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Version` SET  `estAttaque` =  '1' WHERE  `Version`.`groupe` = '".$this->groupeAttaque->getNumero() ."' AND `Version`.`numero` =". $this->version->getNumero();
+        MyPDO::get()->exec($sql);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$this->groupeAttaquant->score."' WHERE  `Groupe`.`numero` =".$this->groupeAttaquant->getNumero();
+        MyPDO::get()->exec($sql);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$this->groupeAttaque->score."' WHERE  `Groupe`.`numero` =".$this->groupeAttaque->getNumero();
+        MyPDO::get()->exec($sql);
+        
     }
     
     public function getGroupeAttaquant() {

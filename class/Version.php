@@ -14,11 +14,13 @@ class Version {
     var $numero;
     var $estAttaque;
     var $pdf;
+    var $groupe;
     
-    function Version($n,$pdf) {
+    function Version($g,$n,$pdf) {
         $this->numero = $n;
         $this->estAttaque = "False";
         $this->pdf = $pdf;
+        $this->groupe = $g;
     }
     
     public function getNumero() {
@@ -44,7 +46,36 @@ class Version {
     public function setPdf($pdf) {
         $this->pdf = $pdf;
     }
+    
+    public function getGroupe() {
+        return $this->groupe;
+    }
 
+    public function setGroupe($groupe) {
+        $this->groupe = $groupe;
+    }
+
+    
+    public static function getVersions($orderBy = "numero", $asc_desc="DESC"){
+        $versions = array();
+        $resultats = MyPDO::get()->query("SELECT * FROM Version ORDER BY $orderBy $asc_desc");
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        while( $ligne = $resultats->fetch() )
+        {
+            $version = new Version($ligne->groupe,$ligne->numero,$ligne->pdf);
+            array_push($versions, $version);
+        }
+        return $versions;
+    }
+    
+    public static function getVersion($g,$n){
+        foreach (Version::getVersions() as $v){
+            if (( $v->getNumero() == $n) && ($v->getGroupe() == $g)) {
+                return $v;
+            }
+        }
+        return null;
+    }
             //put your code here
 }
 

@@ -4,11 +4,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Theorie de la Sécurité</title>
         <link rel="stylesheet" href="style.css"/>
-        <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/jquery.js" type="text/javascript"></script><!-- Insertion de la bibliotheque jQuery -->
         <script type="text/javascript" src="js/localscroll/jquery.localscroll.js"></script>
         <script type="text/javascript" src="js/localscroll/jquery.scrollTo.js"></script>
-        <script type="text/javascript" src="js/lancement.js"></script>
-        <script type="text/javascript"></script>
+        <script type="text/javascript" src="js/lancement.js"></script><!-- permet le lancement de la fonction de scroll -->
     </head>
     <body class="home">
         <div id="content">
@@ -19,6 +18,7 @@
                 <a href="#Classement">Classement</a>
                 <a href="#Attaques">Attaques</a>
                 <a href="#Attaquer">Attaquer</a>
+                <a href="#Version">Nouvelle version</a>
             </div>
             
             <h2 id="Description">Description du projet</h2>
@@ -31,7 +31,7 @@
             <h2 >Classement des groupes</h2>
             
             <?php
-            ini_set('display_errors', 1);
+//            ini_set('display_errors', 1);
             
                 include('class/Groupes.php');
                 include('connection.php');
@@ -57,7 +57,7 @@
                 echo "<table>
                         <tr>
                             <td class='info'></td>";
-                            foreach (Groupe::getGroupes() as $g) {
+                            foreach (Groupe::getGroupes("numero","ASC") as $g) {
                                 $versions = $g->getVersions();
                                 $version = "--";
                                 if (sizeof($g->getVersions()) > 0){
@@ -67,10 +67,10 @@
                             }
                             echo "</tr>";
                         
-                            foreach (Groupe::getGroupes() as $g) {
+                            foreach (Groupe::getGroupes("numero","ASC") as $g) {
                                 echo "  <tr>
                                             <td  class='info'>Groupe ".$g->getNumero()."</td>";
-                                                foreach (Groupe::getGroupes() as $g3) {
+                                                foreach (Groupe::getGroupes("numero","ASC") as $g3) {
                                                     if ($g->getNumero() == $g3->getNumero()){
                                                         echo "<td class='info'></td>";
                                                     }
@@ -97,7 +97,7 @@
                     <select name='groupeAttaquant'>
                         <option>...</option>
                         <?php
-                            foreach (Groupe::getGroupes() as $g) {
+                            foreach (Groupe::getGroupes("numero","ASC") as $g) {
                                  echo "<option id='groupeA' value='".$g->getNumero()."'>Groupe ".$g->getNumero()."</option>";
                             }
                         ?>
@@ -106,7 +106,7 @@
                         <select name='groupeAttaque'>
                             <option>...</option>
                             <?php
-                                foreach (Groupe::getGroupes() as $g) {
+                                foreach (Groupe::getGroupes("numero","ASC") as $g) {
                                      echo "<option id='groupeAE' value='".$g->getNumero()."'>Groupe ".$g->getNumero()."</option>";
                                 }
                             ?>
@@ -114,6 +114,33 @@
                 <br>
                 Attaque au format pdf :
                     <input type="file" id ="attaquePDF" name="attaquePDF"  enctype="multipart/form-data">
+                    <br>
+                    <input type="submit">
+                    
+            <div class="ligne" id="Version"></div>
+            </form>
+            
+            <h2>Nouvelle version</h2>
+            
+            <?php 
+                if (isset($_GET['errorV'])) {
+                    echo "<div class=\"error\">".$_GET["errorV"]."</div>";
+                }
+                ?>
+            
+            <form action="checkVersion.php" method="post">
+                Vous êtes le 
+                    <select name='groupe'>
+                        <option>...</option>
+                        <?php
+                            foreach (Groupe::getGroupes("numero","ASC") as $g) {
+                                 echo "<option id='groupeA' value='".$g->getNumero()."'>Groupe ".$g->getNumero()."</option>";
+                            }
+                        ?>
+                    </select>
+                <br>
+                Version au format pdf :
+                    <input type="file" id ="versionPDF" name="versionPDF"  enctype="multipart/form-data">
                     <br>
                     <input type="submit">
             </form>
