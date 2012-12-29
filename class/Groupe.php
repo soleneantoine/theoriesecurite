@@ -69,7 +69,11 @@ class Groupe {
             
             array_push($this->versions, $v);
         }
-        else echo "Ajout non autorisé<br>";
+        else{
+                print ("<script language = \"JavaScript\">"); 
+                print ("location.href = 'forum.php?errorV=Vous ne pouvez pas proposer de nouvelle version#Version'"); 
+                print ("</script>");
+        }
     }
     
     public function displayVersions() {
@@ -184,7 +188,7 @@ class Groupe {
         $sql = "DELETE FROM `theorieSecurite`.`AttaqueEnCours` WHERE `AttaqueEnCours`.`groupeAttaquant` = ".$attaque->getGroupeAttaquant()." AND `AttaqueEnCours`.`groupeAttaque` = ".$attaque->getGroupeAttaque()." AND `AttaqueEnCours`.`version` = ".$attaque->getVersion();
         MyPDO::get()->exec($sql);
                
-        $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'attaque',  '".$_SESSION["groupe"]."',  '".$attaque->getGroupeAttaquant()."',  '".$attaque->getVersion()."');";
+        $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'attaque',  '".$attaque->getGroupeAttaquant()."',  '".$_SESSION["groupe"]."',  '".$attaque->getVersion()."');";
         MyPDO::get()->exec($sql);
     }
    

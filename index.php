@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-    if (!isset($_SESSION['groupe'])) header("location:index.php");
-?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,7 +10,7 @@
         <script type="text/javascript" src="js/lancement.js"></script><!-- permet le lancement de la fonction de scroll -->
     </head>
     <body class="home">
-        <div id="content">
+        <div id="content" style="position:relative">
             <center><h1>Projet : Conception et analyse de protocoles cryptographiques</h1></center>
             <div id="connection">
                 <?php
