@@ -6,7 +6,7 @@
         print ("</script>");
     }
     include 'class/Groupe.php';   
-    
+    ini_set('display_errors', 1);
     $groupe = Groupe::getGroupe($_SESSION['groupe']);   
     if ($_REQUEST["AcceptDecline"] == 'A') {        
         $attaque = Attaque::getAttaque($_REQUEST["attaquant"], $_SESSION['groupe'], $_REQUEST["version"]);

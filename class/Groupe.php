@@ -108,9 +108,6 @@ class Groupe {
         if ((sizeof($groupe->getVersions()) > 0) && ($groupe->getNumero() != $this->numero)) {
             $v = $groupe->getVersions();
             new Attaque($this, $groupe,$v[sizeof($groupe->getVersions())-1],$pdf);
-            $sql = "INSERT INTO `theorieSecurite`.`AttaqueEnCours` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".$this->numero."', '".$groupe->getNumero()."', '".$v[sizeof($groupe->getVersions())-1]->getNumero()."', NULL, '".$pdf."');";
-            MyPDO::get()->exec($sql);
-            
             
         }
         else throw new Exception("Attaque non autorisée<br>");        

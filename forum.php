@@ -155,7 +155,7 @@
                     }
                     ?>
 
-                <form action="checkAttaque.php" method="post">
+                <form action="checkAttaque.php" method="post" enctype="multipart/form-data">
                     Vous voulez attaquer le groupe 
                             <select name='groupeAttaque'>
                                 <option>...</option>
@@ -167,7 +167,7 @@
                             </select>
                     <br>
                     Attaque au format pdf :
-                        <input type="file" id ="attaquePDF" name="attaquePDF"  enctype="multipart/form-data">
+                        <input type="file" id ="attaquePDF" name="attaquePDF">
                         <br>
                         <input type="submit">
 
