@@ -1,0 +1,162 @@
+/* 
+    Document   : style
+    Created on : 2 déc. 2012, 13:47:14
+    Author     : soleneantoine
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'espregular';
+    src: url('font/esp-webfont.eot');
+    src: url('font/esp-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/esp-webfont.woff') format('woff'),
+         url('font/esp-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'champagne__limousinesregular';
+    src: url('font/champagne__limousines-webfont.eot');
+    src: url('font/champagne__limousines-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/champagne__limousines-webfont.woff') format('woff'),
+         url('font/champagne__limousines-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+root { 
+    display: block;
+}
+
+body {
+    background: url('pictures/low_contrast_linen.png');
+    /*background-color: gray; */
+    font-family: 'champagne__limousinesregular';
+    color: #eee;
+    letter-spacing: 1px;
+}
+
+h1 {
+    color: #00cccc;
+    letter-spacing: normal;
+    margin-bottom: 40px;
+}
+
+h2{
+    color: #00cccc;
+}
+
+p{
+    text-align: justify;
+    line-height: 20px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    height: 30px;
+    text-align: center;
+}
+
+a {
+    color: #00cccc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#content{
+    margin: 20px 50px;
+    position: absolute;
+}
+
+#connection {
+    margin: auto;
+    width: 500px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+}
+
+#fix {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    left: 0;
+    top: 0;
+    padding: 0px 20px;
+    z-index: 100;
+}
+
+#non-fix {
+    top: 96px;
+    padding-bottom: 200px;
+}
+
+.description {
+    margin-top: 20px;
+}
+
+.info {
+    color:#00cccc;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.error {
+    background: rgba(255, 0, 0, 0.3);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.classement{
+    margin-left: 700px;
+}
+
+.trophee{
+    float: left;
+    margin-left: 100px;
+    margin-top: 50px;   
+}
+
+.felicitations {
+    padding-left: 80px;
+    padding-top: 75px;
+    float: left;
+    font-family: 'espregular';
+    color: #00cccc;
+    font-size: large;
+}
+
+.ligne {
+    border-bottom:2px solid #00cccc;
+    padding-top: 150px;
+    margin-bottom: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.menu {
+    text-align: center;
+}
+
+.menu a{
+    border: 1px solid #0CC;
+    font-family: 'espregular';
+    color: #0CC;
+    border-radius: 3px 3px 3px 3px;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 5px;
+    display: block;
+    margin-bottom: 25px;
+    margin-right: 10px;
+    float: left;
+}
+
