@@ -6,7 +6,6 @@
         print ("</script>");        
     }
     include("class/Groupe.php");
-    ini_set('display_errors', 1);
 ?>
 <!DOCTYPE html>
 <html>
@@ -156,7 +155,7 @@
                     }
                     ?>
 
-                <form action="checkAttaque.php" method="post" enctype="multipart/form-data">
+                <form action="checkAttaque.php" method="post">
                     Vous voulez attaquer le groupe 
                             <select name='groupeAttaque'>
                                 <option>...</option>
@@ -171,10 +170,10 @@
                         <input type="file" id ="attaquePDF" name="attaquePDF"  enctype="multipart/form-data">
                         <br>
                         <input type="submit">
-                </form>
-                
+
                 <div class="ligne" id="Version"></div>
-                
+                </form>
+
                 <h2>Nouvelle version</h2>
 
                 <?php 
@@ -183,9 +182,9 @@
                     }
                     ?>
 
-                <form action="checkVersion.php" method="post" enctype="multipart/form-data">               
+                <form action="checkVersion.php" method="post">               
                     Nouvelle version au format pdf :
-                        <input type="file" id ="versionPDF" name="versionPDF" enctype="multipart/form-data">
+                        <input type="file" id ="versionPDF" name="versionPDF"  enctype="multipart/form-data">
                         <br>
                         <?php
                             $resultat = MyPDO::get()->query("SELECT * FROM Groupe WHERE numero=".$_SESSION['groupe'])->fetch(PDO::FETCH_OBJ);

@@ -19,7 +19,6 @@
             MyPDO::get()->exec($sql);
         }
     }
-    
     $groupe = Groupe::getGroupe($_SESSION['groupe']);   
     $groupe->ajoutVersion('');
     print ("<script language = \"JavaScript\">"); 
