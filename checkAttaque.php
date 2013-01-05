@@ -37,14 +37,16 @@
         print ("location.href = 'forum.php?error=Le fichier doit etre un pdf#Attaquer';"); 
         print ("</script>");
     }
+    else {
     
-    $groupeAttaque = Groupe::getGroupe($_POST['groupeAttaque']);
-    $fichier = "attaques/".$groupeAttaquant->getNumero()."vers".$groupeAttaque->getNumero()."||".date("dmyGis").".pdf";
-    
-    $groupeAttaquant->attaque($groupeAttaque,$fichier);
-    move_uploaded_file($_FILES['attaquePDF']['tmp_name'],$fichier);
-    
-    print ("<script language = \"JavaScript\">"); 
-    print ("location.href = 'forum.php';"); 
-    print ("</script>");
+        $groupeAttaque = Groupe::getGroupe($_POST['groupeAttaque']);
+        $fichier = "attaques/".$groupeAttaquant->getNumero()."vers".$groupeAttaque->getNumero()."||".date("dmyGis").".pdf";
+
+        $groupeAttaquant->attaque($groupeAttaque,$fichier);
+        move_uploaded_file($_FILES['attaquePDF']['tmp_name'],$fichier);
+
+        print ("<script language = \"JavaScript\">"); 
+        print ("location.href = 'forum.php';"); 
+        print ("</script>");
+    }
     ?>

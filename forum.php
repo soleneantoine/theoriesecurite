@@ -22,7 +22,7 @@
         <div id="content">
             <div id="fix">
                 <center><h1>Projet : Conception et analyse de protocoles cryptographiques</h1></center>
-
+                <center><?php echo "<span style='color:#00cccc;'> Groupe".$_SESSION["groupe"]."</span>" ?></center>
                 <div class="menu">
                     <a href="#Description">Description</a>
                     <a href="#Notifications">Notifications</a>
@@ -58,7 +58,7 @@
                             echo "<input type='hidden' id = 'attaque' name='attaque' value=".$ligne->id.">";
                             echo "<input type='hidden' id = 'attaquant' name='attaquant' value=".$ligne->groupeAttaquant.">";
                             echo "<input type='hidden' id = 'version' name='version' value=".$ligne->version.">";
-                            echo "<img src='pictures/glyphicons_289_bomb.png' width='15px'/> Le groupe ".$ligne->groupeAttaquant." vous a attaqué sur la version ".$ligne->version." (<a href='".$ligne->pdf."'>Voir leur attaque</a>)<br>";
+                            echo "<img src='pictures/glyphicons_289_bomb.png' width='15px'/> Le groupe ".$ligne->groupeAttaquant." vous a attaqué sur la version ".$ligne->version." (<a href='".$ligne->pdf."' target='blank'>Voir leur attaque</a>)<br>";
                             echo "  <dd>
                                         <select name='AcceptDecline'>
                                             <option value='A'>Accepter</option>
@@ -185,13 +185,8 @@
                 <form id="formVersion" action="checkVersion.php" method="post" enctype="multipart/form-data">               
                     Nouvelle version au format pdf :
                         <input type="file" id ="versionPDF" name="versionPDF">
-                        <br>
-                        <?php
-                            $resultat = MyPDO::get()->query("SELECT * FROM Groupe WHERE numero=".$_SESSION['groupe'])->fetch(PDO::FETCH_OBJ);
-                            if($resultat->score == NULL) {
-                                echo "Cout du protocole : <input type='text' id='coutProtocole' name='coutProtocole'/><br> ";
-                            }
-                        ?>
+                        <br>Cout du protocole : <input type='text' id='coutProtocole' name='coutProtocole'/><br>
+
                         <input type="submit">
                 </form>
             </div>

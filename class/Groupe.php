@@ -57,11 +57,11 @@ class Groupe {
         $this->versions = $versions;
     }
     
-    public function ajoutVersion($pdf){
+    public function ajoutVersion($pdf,$cout){
         if ($this->ajoutVersionAutorise() == "True") {
             $v = new Version($this->numero,(sizeof($this->versions)+1),$pdf);
             
-            $sql = "INSERT INTO `theorieSecurite`.`Version` (`id`, `numero`, `estAttaque`, `groupe`, `pdf`) VALUES (NULL, '".(sizeof($this->versions)+1)."', '0', '".$this->numero."', '".$pdf."');";
+            $sql = "INSERT INTO `theorieSecurite`.`Version` (`id`, `numero`, `estAttaque`, `groupe`, `pdf`, `cout`) VALUES (NULL, '".(sizeof($this->versions)+1)."', '0', '".$this->numero."', '".$pdf."','".$cout."');";
             MyPDO::get()->exec($sql);
             
             $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'version',  '".$_SESSION["groupe"]."',  '',  '".(sizeof($this->versions)+1)."');";
@@ -119,7 +119,7 @@ class Groupe {
         $sql = "SELECT * FROM Attaque WHERE groupeAttaquant = $this->numero";
         foreach  (MyPDO::get()->query($sql) as $row) {
             if($row["groupeAttaque"] == $groupe->getNumero()) {
-                $r .= "attaque(v".$row["version"].") <a href='".$row["pdf"]."'><img src='pictures/imageLoupe.png' style='width: 15px; heigth: 25px;'/></a><br>";
+                $r .= "attaque(v".$row["version"].") <a href='".$row["pdf"]."' target='blank'><img src='pictures/imageLoupe.png' style='width: 15px; heigth: 25px;'/></a><br>";
             }
         }
         return $r;
