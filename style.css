@@ -95,7 +95,6 @@ a:hover {
 }
 
 #non-fix {
-    top: 96px;
     padding-bottom: 200px;
 }
 
@@ -135,7 +134,7 @@ a:hover {
 
 .ligne {
     border-bottom:2px solid #00cccc;
-    padding-top: 178px;
+    padding-top: 140px;
     margin-bottom: 50px;
     margin-left: 10%;
     margin-right: 10%;
@@ -158,5 +157,9 @@ a:hover {
     margin-bottom: 25px;
     margin-right: 10px;
     float: left;
+}
+
+.interligne{
+    min-height: 1000px;
 }
 

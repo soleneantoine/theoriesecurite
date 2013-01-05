@@ -112,7 +112,7 @@ class Groupe {
         }
         else {
             print ("<script language = \"JavaScript\">"); 
-            print ("location.href = 'forum.php?error=Attaque non autorisée#Attaquer';"); 
+            print ("location.href = 'forum.php?error=Attaque non autorisée. Le groupe que vous attaquez n\'a pas encore de version#Attaquer';"); 
             print ("</script>");
         }
     }
