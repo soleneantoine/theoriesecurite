@@ -27,7 +27,7 @@ class Groupe {
         $sql = "SELECT * FROM Version WHERE `groupe` = $numero";
         $this->versions = array();
         foreach  (MyPDO::get()->query($sql) as $row) {
-            $v = new Version($numero,$row['numero'],'');
+            $v = new Version($numero,$row['numero'],$row["pdf"]);
             if ($row["estAttaque"] == "1") $v->setEstAttaque ("True");
             array_push($this->versions,$v);
         }
@@ -61,7 +61,7 @@ class Groupe {
         if ($this->ajoutVersionAutorise() == "True") {
             $v = new Version($this->numero,(sizeof($this->versions)+1),$pdf);
             
-            $sql = "INSERT INTO `theorieSecurite`.`Version` (`id`, `numero`, `estAttaque`, `groupe`, `pdf`) VALUES (NULL, '".(sizeof($this->versions)+1)."', '0', '".$this->numero."', '');";
+            $sql = "INSERT INTO `theorieSecurite`.`Version` (`id`, `numero`, `estAttaque`, `groupe`, `pdf`) VALUES (NULL, '".(sizeof($this->versions)+1)."', '0', '".$this->numero."', '".$pdf."');";
             MyPDO::get()->exec($sql);
             
             $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'version',  '".$_SESSION["groupe"]."',  '',  '".(sizeof($this->versions)+1)."');";

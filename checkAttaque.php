@@ -8,10 +8,15 @@
     include 'class/Groupe.php';
     ini_set('display_errors', 1);
     $groupeAttaquant = Groupe::getGroupe($_SESSION['groupe']);   
-    $extension = strrchr($_FILES['attaquePDF']['name'], '.');
-//    if((!isset($_POST['attaquePDF']))) {
-//        header('Location: index.php?error=Veuillez sélectionner le fichier pdf correspondant à votre attaque#Attaquer');  
-//    }
+    
+    if((!isset($_FILES['attaquePDF']))) {
+        print ("<script language = \"JavaScript\">"); 
+        print ("location.href = 'forum.php?error=Veuillez sélectionner le fichier pdf correspondant à votre attaque#Attaquer"); 
+        print ("</script>");  
+    }
+    else {
+        $extension = strrchr($_FILES['attaquePDF']['name'], '.');
+    }
     if (!isset($_POST['groupeAttaque'])) {
             print ("<script language = \"JavaScript\">"); 
             print ("location.href = 'forum.php?error=Veuillez préciser le groupe attaqué#Attaquer';"); 
