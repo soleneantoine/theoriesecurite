@@ -107,7 +107,7 @@ class Groupe {
     public function attaque($groupe,$pdf) {
         if ((sizeof($groupe->getVersions()) > 0) && ($groupe->getNumero() != $this->numero)) {
             $v = $groupe->getVersions();
-            new Attaque($this, $groupe,$v[sizeof($groupe->getVersions())-1],$pdf);
+            new Attaque($this->getNumero(), $groupe->getNumero(),$v[sizeof($groupe->getVersions())-1]->getNumero(),$pdf);
             
         }
         else throw new Exception("Attaque non autorisée<br>");        

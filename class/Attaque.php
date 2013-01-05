@@ -21,7 +21,7 @@ class Attaque {
         $this->version = $v;
         $this->pdf = $p;
         
-        $sql = "INSERT INTO `theorieSecurite`.`AttaqueEnCours` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".  $this->groupeAttaquant->getNumero()."', '".  $this->groupeAttaque->getNumero()."', '".$this->version->getNumero()."', NULL, '".$this->pdf."');";
+        $sql = "INSERT INTO `theorieSecurite`.`AttaqueEnCours` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".  $this->groupeAttaquant."', '".  $this->groupeAttaque."', '".$this->version."', NULL, '".$this->pdf."');";
         MyPDO::get()->exec($sql);
         
     }
@@ -64,7 +64,7 @@ class Attaque {
         $resultats->setFetchMode(PDO::FETCH_OBJ);
         while( $ligne = $resultats->fetch() )
         {
-            $attaque = new Attaque($ligne->groupeAttaquant,$ligne->groupeAttaque,$ligne->version,$ligne->id);
+            $attaque = new Attaque($ligne->groupeAttaquant,$ligne->groupeAttaque,$ligne->version,$ligne->pdf);
             array_push($attaques, $attaque);
         }
         return $attaques;

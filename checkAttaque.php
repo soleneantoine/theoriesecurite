@@ -34,7 +34,7 @@
     }
     
     $groupeAttaque = Groupe::getGroupe($_POST['groupeAttaque']);
-    $fichier = "attaques/".$groupeAttaquant->getNumero()."vers".$groupeAttaque->getNumero().".pdf";
+    $fichier = "attaques/".$groupeAttaquant->getNumero()."vers".$groupeAttaque->getNumero()."||".date("dmyGis").".pdf";
     
     $groupeAttaquant->attaque($groupeAttaque,$fichier);
     move_uploaded_file($_FILES['attaquePDF']['tmp_name'],$fichier);
