@@ -110,7 +110,11 @@ class Groupe {
             new Attaque($this->getNumero(), $groupe->getNumero(),$v[sizeof($groupe->getVersions())-1]->getNumero(),$pdf);
             
         }
-        else throw new Exception("Attaque non autorisée<br>");        
+        else {
+            print ("<script language = \"JavaScript\">"); 
+            print ("location.href = 'forum.php?error=Attaque non autorisée#Attaquer';"); 
+            print ("</script>");
+        }
     }
     
     public function displayAttaques ($groupe) {
