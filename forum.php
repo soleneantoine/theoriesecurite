@@ -17,6 +17,19 @@
         <script type="text/javascript" src="js/localscroll/jquery.localscroll.js"></script>
         <script type="text/javascript" src="js/localscroll/jquery.scrollTo.js"></script>
         <script type="text/javascript" src="js/lancement.js"></script><!-- permet le lancement de la fonction de scroll -->
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-28946334-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+          </script>
     </head>
     <body class="home">
         <div id="content">
@@ -37,7 +50,7 @@
             <div id="non-fix">
             
                 <div class="ligne" id="Description" style="padding-top: 113px;"></div>
-                <div class="interligne">
+                <div class="interligne"  style="min-height: 0;">
                     <h2>Description du projet</h2>
                     <p class="description">L'objectif de ce projet est d'apprendre à concevoir des protocoles cryptographiques et à les modéliser et les analyser
                     à l'aide de l'outil <span style="color : #00cccc">ProVerif</span>. Dans la première partie du projet, chaque groupe devra concevoir un protocole qui satisfait des contraintes données.
@@ -51,27 +64,22 @@
                     <h2>Notifications</h2>
 
                     <?php
-                        $sql = "SELECT * FROM AttaqueEnCours WHERE groupeAttaque = ".$_SESSION["groupe"];
+                        $sql = "SELECT * FROM Attaque WHERE groupeAttaque = ".$_SESSION["groupe"]." ORDER BY id DESC";
                         $resultats = MyPDO::get()->query($sql);
                         $resultats->setFetchMode(PDO::FETCH_OBJ);
                         if ($resultats->fetch() == "") {
                             echo "Aucune notification.";
                         }
-                        while( $ligne = $resultats->fetch() )
-                        {
-                            echo "<form action='acceptDeclineAttaque.php' method='post'>";
+                        else {
+                            $resultats = MyPDO::get()->query($sql);
+                            $resultats->setFetchMode(PDO::FETCH_OBJ);
+                            while( $ligne = $resultats->fetch() )
+                            {
                                 echo "<input type='hidden' id = 'attaque' name='attaque' value=".$ligne->id.">";
                                 echo "<input type='hidden' id = 'attaquant' name='attaquant' value=".$ligne->groupeAttaquant.">";
                                 echo "<input type='hidden' id = 'version' name='version' value=".$ligne->version.">";
                                 echo "<img src='pictures/glyphicons_289_bomb.png' width='15px'/> Le groupe ".$ligne->groupeAttaquant." vous a attaqué sur la version ".$ligne->version." (<a href='".$ligne->pdf."' target='blank'>Voir leur attaque</a>)<br>";
-                                echo "  <dd>
-                                            <select name='AcceptDecline'>
-                                                <option value='A'>Accepter</option>
-                                                <option value='D'>Décliner</option>
-                                            </select>
-                                        </dd>";
-                                echo "<dd><input type='submit' value='Ok'/></dd>";
-                            echo "</form>";
+                            }
                         }
                     ?>
                 </div>
@@ -80,22 +88,33 @@
                 <div class="interligne">
                     <h2>Evènements</h2>
                     <?php
-                        $sql = "SELECT * FROM Notifications ORDER BY id DESC LIMIT 0,10";
+                        $sql = "SELECT * FROM Notifications ORDER BY id DESC LIMIT 0,50";
                         $resultats = MyPDO::get()->query($sql);
                         $resultats->setFetchMode(PDO::FETCH_OBJ);
                         if ($resultats->fetch() == "") {
                             echo "Aucun évènement.";
                         }
-                        while( $ligne = $resultats->fetch() )
-                        {
-                            if ($ligne->type == "version") {
-                                echo "<img src='pictures/glyphicons_190_circle_plus.png' width='15px'/> Le groupe ".$ligne->groupe." a ajouté une ".$ligne->version."° version<br>";
-                            }
-                            else if ($ligne->type == "attaque") {
-                                echo "<img src='pictures/glyphicons_289_bomb.png' width='15px'/> Le groupe ".$ligne->groupe." a attaqué le groupe ".$ligne->groupeAttaque." sur la version ".$ligne->version."<br>";
-                            }
-                            else if ($ligne->type == "decline") {
-                                echo "<img src='pictures/glyphicons_199_ban.png' width='15px'/> Le groupe ".$ligne->groupe." a refusé l'attaque du groupe ".$ligne->groupeAttaque." sur la version ".$ligne->version."<br>";
+                        else {
+                            $resultats = MyPDO::get()->query($sql);
+                            $resultats->setFetchMode(PDO::FETCH_OBJ);
+                            while( $ligne = $resultats->fetch() )
+                            {
+                                if(($_SESSION["groupe"] == $ligne->groupe) || ($_SESSION["groupe"] == $ligne->groupeAttaque)) {
+                                    echo "<span style='color : #00cccc'>";
+                                }
+                                if ($ligne->type == "version") {
+                                    echo "<img src='pictures/glyphicons_190_circle_plus.png' width='15px'/> Le groupe ".$ligne->groupe." a ajouté une ".$ligne->version."° version<br>";
+                                }
+                                else if ($ligne->type == "attaque") {
+                                    echo "<img src='pictures/glyphicons_289_bomb.png' width='15px'/> Le groupe ".$ligne->groupe." a attaqué le groupe ".$ligne->groupeAttaque." sur la version ".$ligne->version."<br>";
+                                }
+                                else if ($ligne->type == "decline") {
+                                    echo "<img src='pictures/glyphicons_199_ban.png' width='15px'/> Le groupe ".$ligne->groupe." a refusé l'attaque du groupe ".$ligne->groupeAttaque." sur la version ".$ligne->version."<br>";
+                                }
+                                
+                                if(($_SESSION["groupe"] == $ligne->groupe) || ($_SESSION["groupe"] == $ligne->groupeAttaque)) {
+                                    echo "</span>";
+                                }
                             }
                         }
                     ?>
@@ -161,7 +180,7 @@
                 </div>
 
                 <div class="ligne" id="Attaquer"></div>
-                <div class="interligne">
+                <div class="interligne"  style="min-height: 0;">
                     <h2>Attaquer</h2>
 
                     <?php 
@@ -191,7 +210,7 @@
                     
 
                 <div class="ligne" id="Version"></div>
-                <div class="interligne">
+                <div class="interligne" >
                 
                     <h2>Nouvelle version</h2>
 

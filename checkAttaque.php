@@ -37,8 +37,7 @@
         print ("location.href = 'forum.php?error=Le fichier doit etre un pdf#Attaquer';"); 
         print ("</script>");
     }
-    else {
-    
+    else {    
         $groupeAttaque = Groupe::getGroupe($_POST['groupeAttaque']);
         $fichier = "attaques/".$groupeAttaquant->getNumero()."vers".$groupeAttaque->getNumero()."||".date("dmyGis").".pdf";
 

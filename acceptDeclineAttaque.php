@@ -14,12 +14,14 @@
     }
     elseif ($_REQUEST["AcceptDecline"] == 'D') {        
         $sql = "DELETE FROM `theorieSecurite`.`AttaqueEnCours` WHERE `AttaqueEnCours`.`id` = ".$_REQUEST["attaque"];
+        echo $sql.'<br>';
         MyPDO::get()->exec($sql);
         
         $sql = "INSERT INTO `theorieSecurite`.`Notifications` (`id`, `type`, `groupe`, `groupeAttaque`, `version`) VALUES (NULL, 'decline', '".$_SESSION['groupe']."', '".$_REQUEST["attaquant"]."', '".$_REQUEST["version"]."');";
-        MyPDO::get()->exec($sql);       
+        MyPDO::get()->exec($sql);    
+        echo $sql.'<br>';
     }  
-    print ("<script language = \"JavaScript\">"); 
-    print ("location.href = 'forum.php';"); 
-    print ("</script>");   
+//    print ("<script language = \"JavaScript\">"); 
+//    print ("location.href = 'forum.php';"); 
+//    print ("</script>");   
 ?>

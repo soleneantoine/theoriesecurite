@@ -123,7 +123,7 @@ class Groupe {
         $sql = "SELECT * FROM Attaque WHERE groupeAttaquant = $this->numero";
         foreach  (MyPDO::get()->query($sql) as $row) {
             if($row["groupeAttaque"] == $groupe->getNumero()) {
-                $r .= "attaque(v".$row["version"].") <a href='".$row["pdf"]."' target='blank'><img src='pictures/imageLoupe.png' style='width: 15px; heigth: 25px;'/></a><br>";
+                $r .= "attaque(v".$row["version"].") <br>";
             }
         }
         return $r;
@@ -169,9 +169,11 @@ class Groupe {
         $version->setEstAttaque("True");
         
         $sql = "INSERT INTO `theorieSecurite`.`Attaque` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".$attaque->getGroupeAttaquant()."', '".$attaque->getGroupeAttaque()."', '".$attaque->getVersion()."', NULL, '".$attaque->getPdf()."');";
+        echo $sql.'<br>';
         MyPDO::get()->exec($sql);
-        
+         
         $sql = "UPDATE  `theorieSecurite`.`Version` SET  `estAttaque` =  '1' WHERE  `Version`.`groupe` = '".$attaque->getGroupeAttaque() ."' AND `Version`.`numero` =". $attaque->getVersion();
+        echo $sql.'<br>';
         MyPDO::get()->exec($sql);
         
         $gAttaquant = Groupe::getGroupe($attaque->getGroupeAttaquant());
@@ -181,15 +183,19 @@ class Groupe {
         $gAttaque->setScore($gAttaque->getScore() - 20);
         
         $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$gAttaquant->getScore()."' WHERE  `Groupe`.`numero` =".$gAttaquant->getNumero();
+        echo $sql.'<br>';
         MyPDO::get()->exec($sql);
         
         $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$gAttaque->getScore()."' WHERE  `Groupe`.`numero` =".$gAttaque->getNumero();
+        echo $sql.'<br>';
         MyPDO::get()->exec($sql);
         
-        $sql = "DELETE FROM `theorieSecurite`.`AttaqueEnCours` WHERE `AttaqueEnCours`.`groupeAttaquant` = ".$attaque->getGroupeAttaquant()." AND `AttaqueEnCours`.`groupeAttaque` = ".$attaque->getGroupeAttaque()." AND `AttaqueEnCours`.`version` = ".$attaque->getVersion();
+        $sql = "DELETE FROM `theorieSecurite`.`AttaqueEnCours` WHERE `AttaqueEnCours`.`groupeAttaquant` = ".$attaque->getGroupeAttaquant()." AND `AttaqueEnCours`.`groupeAttaque` = ".$attaque->getGroupeAttaque()." AND `AttaqueEnCours`.`version` = ".$attaque->getVersion()." AND `Version`.`pdf`='".$attaque->getPdf()."'";
+        echo $sql.'<br>';
         MyPDO::get()->exec($sql);
                
         $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'attaque',  '".$attaque->getGroupeAttaquant()."',  '".$_SESSION["groupe"]."',  '".$attaque->getVersion()."');";
+        echo $sql.'<br>';
         MyPDO::get()->exec($sql);
     }
    

@@ -21,8 +21,29 @@ class Attaque {
         $this->version = $v;
         $this->pdf = $p;
         
-        $sql = "INSERT INTO `theorieSecurite`.`AttaqueEnCours` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".  $this->groupeAttaquant."', '".  $this->groupeAttaque."', '".$this->version."', NULL, '".$this->pdf."');";
+        $attaquant = Groupe::getGroupe($this->groupeAttaquant);
+        $attaquant->setScore($attaquant->getScore()+20);
+        
+        $attaque = Groupe::getGroupe($this->groupeAttaque);
+        $attaque->setScore($attaque->getScore()-20);     
+                
+        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$attaquant->getScore()."' WHERE  `Groupe`.`numero` =".$attaquant->getNumero();
         MyPDO::get()->exec($sql);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Groupe` SET  `score` =  '".$attaque->getScore()."' WHERE  `Groupe`.`numero` =".$attaque->getNumero();
+        MyPDO::get()->exec($sql);
+        
+        $sql = "INSERT INTO  `theorieSecurite`.`Notifications` (`id` ,`type` ,`groupe` ,`groupeAttaque` ,`version`)VALUES ('',  'attaque',  '".$attaquant->getNumero()."',  '".$attaque->getNumero()."',  '".$this->version."');";
+        MyPDO::get()->exec($sql);
+        
+        $sql = "INSERT INTO `theorieSecurite`.`Attaque` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".$attaquant->getNumero()."', '".$attaque->getNumero()."', '".$this->version."', NULL, '".$this->pdf."');";
+        MyPDO::get()->exec($sql);
+        
+        $sql = "UPDATE  `theorieSecurite`.`Version` SET  `estAttaque` =  '1' WHERE  `Version`.`groupe` = '".$attaque->getNumero() ."' AND `Version`.`numero` =". $this->version;
+        MyPDO::get()->exec($sql);
+        
+//        $sql = "INSERT INTO `theorieSecurite`.`AttaqueEnCours` (`groupeAttaquant`, `groupeAttaque`, `version`, `id`, `pdf`) VALUES ('".  $this->groupeAttaquant."', '".  $this->groupeAttaque."', '".$this->version."', NULL, '".$this->pdf."');";
+//        MyPDO::get()->exec($sql);
         
     }
     
